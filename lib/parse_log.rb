@@ -86,7 +86,7 @@ def compress_js_file(log_path, web_root_path, compress_path)
 	
 	if !js_file_list.empty?
 		js_file_list.each do |js_file|
-			compress_file_path = js_file.gsub(web_root_path, compress_path)
+			compress_file_path = js_file.sub(web_root_path, compress_path)
 			dir_validate(compress_file_path)
 			`uglifyjs #{js_file} -o #{compress_file_path} -c`
 		end
