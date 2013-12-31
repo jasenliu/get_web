@@ -49,21 +49,21 @@ def parse_file_list(log_path)
 	
 	js_file_list.each do |js|
 		if js.start_with?('A') || js.start_with?('U')
-			js = js.sub(/[AU]/, '').sub('\\', '/').strip
+			js = js.sub(/[AU]/, '').gsub('\\', '/').strip
 			tem_js_list << js
 		end
 	end
 	
 	non_js_file_list.each do |non_js|
 		if non_js.start_with?('A') || non_js.start_with?('U')
-		  non_js = non_js.sub(/[AU]/, '').sub('\\', '/').strip
+		  non_js = non_js.sub(/[AU]/, '').gsub('\\', '/').strip
 			tem_non_js_list << non_js
 		end
 	end
 	
 	tem_hash_file = {
-		"js" => tem_js_list,
-		"non_js" => tem_non_js_list
+		"js" => tem_js_list.uniq,
+		"non_js" => tem_non_js_list.uniq
 	}
 	tem_hash_file
 end
@@ -76,7 +76,7 @@ def compress_js_file(log_path, web_root_path, compress_path)
 	if !non_js_file_list.empty?
 		non_js_file_list.each do |non_js|
 			next if File.directory?(non_js)
-			tem_file_path = non_js.gsub(web_root_path, compress_path)
+			tem_file_path = non_js.sub(web_root_path, compress_path)
 			dir_validate(tem_file_path)
 			File.cp(non_js, tem_file_path, true)
 		end
