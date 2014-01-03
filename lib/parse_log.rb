@@ -25,7 +25,7 @@ def get_file_list(log_path)
 	
 	lines = File.open(log_path).readlines
 	lines.each do |line|
-		if line.include?('.js')
+    if line.end_with?(".js\n")
 			js_file_list << line
 		else
 			non_js_file_list << line
