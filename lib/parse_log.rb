@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'ftools'
+#require 'ftools'
 require 'fileutils'
 require 'find'
 
@@ -28,10 +28,13 @@ def get_file_list(log_path)
     if line.end_with?(".js\n")
 			js_file_list << line
 		else
-			non_js_file_list << line
+			if line.include?("revision") || line.include?("Updating")
+				puts "ignore..."
+			else
+				non_js_file_list << line
+			end
 		end
 	end
-	
 	hash_file = {
 		"js" => js_file_list,
 		"non_js" => non_js_file_list
