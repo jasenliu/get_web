@@ -81,7 +81,7 @@ def compress_js_file(log_path, web_root_path, compress_path)
 			next if File.directory?(non_js)
 			tem_file_path = non_js.sub(web_root_path, compress_path)
 			dir_validate(tem_file_path)
-			File.cp(non_js, tem_file_path, true)
+			FileUtils.cp(non_js, tem_file_path)
 		end
 	else
 		puts "\n no non_js file to copy"
